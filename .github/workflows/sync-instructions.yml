@@ -1,0 +1,33 @@
+﻿name: Sync Copilot Instructions to Target Repos
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/copilot-instructions.md'
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        repo:
+          - VinayKumarM01/repo-abc
+          # Add more repos here as needed
+
+    steps:
+      - name: Checkout source repo
+        uses: actions/checkout@v4
+
+      - name: Push instructions to target repo
+        uses: dmnemec/copy_file_to_another_repo_action@main
+        env:
+          API_TOKEN_GITHUB: ${{ secrets.SYNC_TOKEN }}
+        with:
+          source_file: '.github/copilot-instructions.md'
+          destination_repo: ${{ matrix.repo }}
+          destination_branch: main
+          destination_folder: '.github'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
+          user_name: 'github-actions[bot]'
+          commit_message: 'chore: sync copilot instructions from repo-instructions'
