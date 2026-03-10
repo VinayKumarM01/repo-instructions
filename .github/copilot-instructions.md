@@ -14,6 +14,7 @@ ython
 iables and functions
 - Use PascalCase for cla
 sses and interfaces
+- All methods end name with ZA. Eg: for method addUser it should be addUserAZ
 
 ## Code Review Checklist
 
